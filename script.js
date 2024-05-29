@@ -1,4 +1,5 @@
 import { dataSets } from "./data.js";
+import { parentDashboardPassword } from "./password.js";
 
 let gameType = "letters";
 let firstBox = null;
@@ -176,7 +177,7 @@ function showNameModal() {
 
 function showPasswordPrompt() {
   const password = prompt("Enter the password to access the parent dashboard:");
-  if (password === "0546814936") {
+  if (password === parentDashboardPassword) {
     window.location.href = "dashboard.html";
   } else {
     alert("Incorrect password.");
