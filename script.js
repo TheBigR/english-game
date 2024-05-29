@@ -8,6 +8,7 @@ let mistakeLimit = parseInt(localStorage.getItem("mistakeLimit")) || 3; // Load 
 let matchedPairs = [];
 let totalPairs = 0;
 let userName = "";
+let gameActive = true;
 
 document.getElementById("reset-btn").addEventListener("click", resetGame);
 document.getElementById("game-type").addEventListener("change", setGameType);
@@ -15,6 +16,12 @@ document.getElementById("start-game-btn").addEventListener("click", startGame);
 document
   .getElementById("parent-dashboard-btn")
   .addEventListener("click", showPasswordPrompt);
+document
+  .getElementById("reset-game-over-btn")
+  .addEventListener("click", resetGameOver);
+document
+  .getElementById("review-game-btn")
+  .addEventListener("click", reviewGame);
 
 function populateGameTypeDropdown() {
   const gameTypeSelect = document.getElementById("game-type");
@@ -36,6 +43,7 @@ function shuffle(array) {
 }
 
 function resetGame() {
+  gameActive = true;
   mistakes = 0;
   matchedPairs = [];
   document.getElementById("mistakes-count").innerText = mistakes;
@@ -87,6 +95,7 @@ function placeBoxes() {
 }
 
 function setGameType() {
+  gameActive = true;
   gameType = document.getElementById("game-type").value;
   resetGame();
 }
@@ -99,6 +108,8 @@ function updatePairsLeftCount() {
 document
   .getElementById("letter-container")
   .addEventListener("click", function (event) {
+    if (!gameActive) return;
+
     const target = event.target;
     if (target.classList.contains("box")) {
       if (target === firstBox) {
@@ -130,6 +141,9 @@ document
             target.style.backgroundColor = "";
             firstBox = null;
           }, 1000);
+          if (mistakes >= mistakeLimit) {
+            gameOver();
+          }
         }
       }
     }
@@ -182,6 +196,20 @@ function showPasswordPrompt() {
   } else {
     alert("Incorrect password.");
   }
+}
+
+function gameOver() {
+  gameActive = false;
+  document.getElementById("game-over-modal").style.display = "block";
+}
+
+function resetGameOver() {
+  document.getElementById("game-over-modal").style.display = "none";
+  resetGame();
+}
+
+function reviewGame() {
+  document.getElementById("game-over-modal").style.display = "none";
 }
 
 populateGameTypeDropdown();
