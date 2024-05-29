@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Parent Dashboard</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      .dashboard-container {
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: center;
+      }
+      h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+      }
+      .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        margin: 10px;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: white;
+        transition: background-color 0.3s ease;
+      }
+      .btn:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <h1>Parent Dashboard</h1>
+      <button class="btn" onclick="location.href='index.html'">
+        Back to Game
+      </button>
+      <div style="margin-top: 20px; display: inline-block">
+        <label for="mistakes-limit">Mistakes Limit:</label>
+        <select id="mistakes-limit" style="margin-left: 5px">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+        </select>
+        <button class="btn" onclick="saveMistakeLimit()">Save</button>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", (event) => {
+        const mistakeLimit =
+          parseInt(localStorage.getItem("mistakeLimit")) || 3;
+        document.getElementById("mistakes-limit").value = mistakeLimit;
+      });
+
+      function saveMistakeLimit() {
+        const mistakeLimit = document.getElementById("mistakes-limit").value;
+        localStorage.setItem("mistakeLimit", mistakeLimit);
+        alert("Mistakes limit saved successfully.");
+      }
+    </script>
+  </body>
+</html>
